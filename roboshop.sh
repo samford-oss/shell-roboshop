@@ -8,7 +8,7 @@ DOMAIN_NAME="samali.xyz"
 
 for instance in "${INSTANCES[@]}"
 do
-  INSTANCE_ID=$(aws ec2 run-instances --image-id $ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids $sg-0c550dd13db8bcafc --query 'Instances[0].InstanceId' --output text)
+  INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids sg-0c550dd13db8bcafc --query 'Instances[0].InstanceId' --output text)
 
   echo "Launched instance $instance with ID $INSTANCE_ID. Waiting for it to be running..."
 
