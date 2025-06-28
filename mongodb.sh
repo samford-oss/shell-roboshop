@@ -28,17 +28,17 @@ else
 fi
 
 # validate functions takes input as exit status, what command they tried to install
-VALIDATE() {
+VALIDATE(){
     if [ $1 -eq 0 ]; then
-        echo -e "$2 is ....$G  SUCCESS ...$N" | tee -a $LOG_FILE # tee command means adding single o/p to multiple ways it add to screen and to file also
+        echo -e "$2 is ... $G  SUCCESS $N" | tee -a $LOG_FILE # tee command means adding single o/p to multiple ways it add to screen and to file also
     else
-        echo -e "$2 is.... $R  FAILURE...$N" | tee -a $LOG_FILE
+        echo -e "$2 is ... $R  FAILURE $N" | tee -a $LOG_FILE
         exit 1
     fi
 }
 
-cp mongo.repo /etc/yum.repos.d/mongodb.repo
-VALIDATE $? "Copying Mongodb"
+cp mongo.repo /etc/yum.repos.d/mongodconfig.repo
+VALIDATE $? "Copying Mongo Repo config file"
 
 dnf install mongodb-org -y &>>$LOG_FILE # redirecting to amperson log file
 VALIDATE $? "Mongodb Server Installing"
@@ -46,13 +46,13 @@ VALIDATE $? "Mongodb Server Installing"
 systemctl enable mongod &>>$LOG_FILE
 VALIDATE $? "Enabling Mongodb"
 
-systemctl start mongod
+systemctl start mongod &>>$LOG_FILE
 VALIDATE $? "Starting Mongodb"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 VALIDATE $? "Editing mongodb conf file for remote connections"
 
-systemctl restart mongod
+systemctl restart mongod &>>$LOG_FILE
 VALIDATE $? "Restarting mongod"
 
 END_TIME=$(date +%s)
