@@ -74,12 +74,10 @@ systemctl start catalogue
 VALIDATE $? "Starting Catalogue"
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongodconfig.repo
-VALIDATE $? "Copying mongo repo"
-
 dnf install mongodb-mongosh -y &>>$LOG_FILE
-VALIDATE $? "Mongodb installing"
+VALIDATE $? "Mongodb client installing"
 
-STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
+STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0] 
 if [ $STATUS -lt 0 ]
 then
     mongosh --host mongodb.samali.xyz </app/db/master-data.js &>>$LOG_FILE
