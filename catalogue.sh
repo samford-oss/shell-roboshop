@@ -77,7 +77,7 @@ cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongodconfig.repo
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Mongodb client installing"
 STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0] 
-if [ $STATUS -lt 0 ]
+if [ $STATUS -ne 1 ]
 then
     mongosh --host mongodb.samali.xyz </app/db/master-data.js &>>$LOG_FILE
     VALIDATE $? "Loading data into mongodb"
