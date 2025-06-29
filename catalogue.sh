@@ -76,7 +76,7 @@ VALIDATE $? "Starting Catalogue"
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongodconfig.repo
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Mongodb client installing"
-STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")' --quiet) -lt 0] 
+STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
 if [ $STATUS -ne 1 ]
 then
