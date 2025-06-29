@@ -78,10 +78,10 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Mongodb client installing"
 STATUS=$(mongosh --host mongodb.samali.xyz --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
 
-if [ $STATUS -ne 1 ]
-then
-    mongosh --host mongodb.samali.xyz </app/db/master-data.js &>>$LOG_FILE
-    VALIDATE $? "Loading data into mongodb"
-else
-    echo -e "Data is already loaded ... $Y SKIPPING $N"
-fi
+# if [ $STATUS -ne 1 ]
+# then
+#     mongosh --host mongodb.samali.xyz </app/db/master-data.js &>>$LOG_FILE
+#     VALIDATE $? "Loading data into mongodb"
+# else
+#     echo -e "Data is already loaded ... $Y SKIPPING $N"
+# fi
